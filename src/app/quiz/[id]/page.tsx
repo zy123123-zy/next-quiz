@@ -1,14 +1,14 @@
 import postgres from 'postgres';
 import { redirect } from 'next/navigation';
-type Props = {
-  params: Promise<{ id: string }>;
-};
+// type Props = {
+//   params: Promise<{ id: string }>;
+// };
 const sql = postgres(process.env.DATABASE_URL);
-type QuizItem = {
-  quiz_id: number;
-  name: string;
-  title: string;
-};
+// type QuizItem = {
+//   quiz_id: number;
+//   name: string;
+//   title: string;
+// };
 async function Quiz({ id, searchParams }: { id: string, searchParams: { show?: string } }) {
   const answers = await sql`
     SELECT
