@@ -45,7 +45,7 @@ async function Quiz({ id, show }: { id: string, show?: string }) {
 export default async function QuizPage({
   params, searchParams
 }: {
-  params: { id: string },
+  params: Promise<{ id: string }>,
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
   const { id } = await params;
