@@ -26,7 +26,9 @@ export default function QuizForm() {
         isCorrect: formData.get(`correct-${id}`) === 'on'
       }
     })
-    const sqlString = `
+
+
+    await sql`
       WITH new_quiz AS (
         INSERT INTO quizzes (title, description, question_text, created_at)
         VALUES (${title}, ${description}, ${question}, NOW())
@@ -38,9 +40,7 @@ export default function QuizForm() {
         ((SELECT quiz_id FROM new_quiz), ${answers[1].answer}, ${answers[1].isCorrect}),
         ((SELECT quiz_id FROM new_quiz), ${answers[2].answer}, ${answers[2].isCorrect});
     `
-    // const a: never[] = sql<never[]>`${sqlString}`
-    const a = sql<never[]>`${sqlString}`
-    console.log(a)
+
     revalidatePath('/')
   }
   return (
