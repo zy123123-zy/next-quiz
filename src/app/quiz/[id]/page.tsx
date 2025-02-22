@@ -9,7 +9,7 @@ const sql = postgres(process.env.DATABASE_URL);
 //   name: string;
 //   title: string;
 // };
-async function Quiz({ id, searchParams }: { id: string, searchParams: { show?: string } }) {
+async function Quiz({ id, show }: { id: string, show?: string }) {
   const answers = await sql`
     SELECT
       q.quiz_id,
@@ -33,7 +33,7 @@ async function Quiz({ id, searchParams }: { id: string, searchParams: { show?: s
           <li key={answer.answer_id}>
             <label>
               <p>{answer.answer_text}</p>
-              {searchParams.show === 'true' && answer.ts_correct && 'v'}
+              {show === 'true' && answer.ts_correct && 'v'}
             </label>
           </li>
         ))}
@@ -42,12 +42,18 @@ async function Quiz({ id, searchParams }: { id: string, searchParams: { show?: s
   );
 }
 
-export default async function QuizPage({ params, searchParams }: { params: { id: string }, searchParams: { show: string } }) {
+export default async function QuizPage({
+  params, searchParams
+}: {
+  params: { id: string },
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
   const { id } = await params;
+  const queryParams = await searchParams
   return (
     <section>
       <h1>Quiz {id}</h1>
-      <Quiz id={id} searchParams={searchParams} />
+      <Quiz id={id} show={queryParams.show === 'true' ? 'true' : 'false'} />
       <form action={async () => {
         'use server';
         redirect(`/quiz/${id}?show=true`);
