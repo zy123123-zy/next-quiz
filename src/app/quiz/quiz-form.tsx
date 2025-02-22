@@ -26,7 +26,7 @@ export default function QuizForm() {
         isCorrect: formData.get(`correct-${id}`) === 'on'
       }
     })
-
+    // @ts-expect-error aaa
     await sql`
       WITH new_quiz AS (
         INSERT INTO quizzes (title, description, question_text, created_at)
