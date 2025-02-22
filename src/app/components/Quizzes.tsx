@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import postgres from 'postgres';
 export default async function Quizzes() {
-  const sql = postgres(process.env.DATABASE_URL);
+  // const sql = ;
   type Quiz = {
     quiz_id: number;
     description: string;
     title: string;
   };
-  const quizzes = await sql<Quiz[]>`
+  const quizzes = await postgres(process.env.DATABASE_URL)<Quiz[]>`
     SELECT quiz_id, description, title FROM quizzes
   `;
   return (
