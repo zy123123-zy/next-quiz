@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 // type Props = {
 //   params: Promise<{ id: string }>;
 // };
-const sql = postgres(process.env.DATABASE_URL);
+const sql = postgres(process.env.DATABASE_URL as string);
 // type QuizItem = {
 //   quiz_id: number;
 //   name: string;

@@ -1,6 +1,6 @@
 import { revalidatePath } from 'next/cache';
 import postgres from 'postgres';
-const sql = postgres(process.env.DATABASE_URL);
+const sql = postgres(process.env.DATABASE_URL as string);
 function Answer({ id }: { id: number }) {
   return (
     <label>
