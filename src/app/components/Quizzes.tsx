@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import postgres from 'postgres';
 export default async function Quizzes() {
-  const sql: any = postgres(process.env.DATABASE_URL);
+  const sql = postgres(process.env.DATABASE_URL);
   type Quiz = {
     quiz_id: number;
     description: string;
