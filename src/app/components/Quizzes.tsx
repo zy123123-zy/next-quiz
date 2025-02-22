@@ -7,14 +7,13 @@ export default async function Quizzes() {
     description: string;
     title: string;
   };
-  const quizzes: Quiz[] = await sql`
+  const quizzes = await sql<Quiz[]>`
     SELECT quiz_id, description, title FROM quizzes
   `;
   return (
     <ul>
       {quizzes.map((quiz) => (
         <li key={quiz.quiz_id}>
-          {/* <Link href={`/quiz/${quiz.quiz_id}`}>1</Link> */}
           <Link href={`/quiz/${quiz.quiz_id}`}>
             {quiz.description}
           </Link>
