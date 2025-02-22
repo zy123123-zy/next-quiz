@@ -19,13 +19,14 @@ export default function QuizForm() {
     const title = formData.get('title') as string
     const description = formData.get('description') as string
     const question = formData.get('question') as string
-    const answers = [1, 2, 3].map((id) => {
+    type answer = { answer: FormDataEntryValue | null, isCorrect: boolean }
+    const answers: answer[] = [1, 2, 3].map((id) => {
       return {
         answer: formData.get(`answer${id}`),
         isCorrect: formData.get(`correct-${id}`) === 'on'
       }
     })
-    await sql`
+    const sqlString = `
       WITH new_quiz AS (
         INSERT INTO quizzes (title, description, question_text, created_at)
         VALUES (${title}, ${description}, ${question}, NOW())
@@ -37,6 +38,9 @@ export default function QuizForm() {
         ((SELECT quiz_id FROM new_quiz), ${answers[1].answer}, ${answers[1].isCorrect}),
         ((SELECT quiz_id FROM new_quiz), ${answers[2].answer}, ${answers[2].isCorrect});
     `
+    // const a: never[] = sql<never[]>`${sqlString}`
+    const a = sql<never[]>`${sqlString}`
+    console.log(a)
     revalidatePath('/')
   }
   return (
